@@ -23,10 +23,9 @@
     <%= f.label :image %><br>
     <%= f.text_field :image %>
   </div>
-  <div class="field">
-    <%= f.label :department_id %><br>
-    <%= f.number_field :department_id %>
-  </div>
+
+  <%= f.hidden_field :department_id %>
+
   <div class="actions">
     <%= f.submit %>
   </div>
