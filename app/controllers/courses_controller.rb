@@ -66,7 +66,7 @@ class CoursesController < ApplicationController
     def set_course
       @course = Course.find(params[:id])
       @semesters = @course.semesters.all
-      @semesters = @course.semesters.build
+      @semester = @course.semesters.build
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

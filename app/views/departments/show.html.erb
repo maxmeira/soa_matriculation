@@ -1,58 +1,101 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @department.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @department.description %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @department.image %>
-</p>
-
-<p>
-  <strong>Institute:</strong>
-  <%= @department.institute_id %>
-</p>
-
-<%= link_to 'Edit', edit_department_path(@department) %> |
-<%= link_to 'Back', departments_path %>
-
-
-<h1>New Course</h1>
-
-<%= render 'courses/form' %>
-
-
-<h1>Listing Courses</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Image</th>
-      <th>Department</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @courses.each do |course| %>
-      <tr>
-        <td><%= course.name %></td>
-        <td><%= course.description %></td>
-        <td><%= course.image %></td>
-        <td><%= course.department_id %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% provide(:title, "Departamentos #{@department.name}") %>
+<div class="box box-default box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">  
+      <h1>
+        <strong>Departamento: </strong>
+        <%= @department.name %>
+      </h1>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tr>
+          <td rowspan="3">
+            <h1>IMAGEM</h1>
+          </td>
+          <td>
+            <strong>Description:</strong>
+            <%= @department.description %>
+          </td>
+        </tr>
+        <tr>
+          <td> Criado em: <%= @department.created_at.to_s(:created) %></td>
+        </tr>
+        <tr>
+          <td>Editado em: <%= @department.updated_at.to_s(:updated) %></td>
+        </tr> 
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+  <div class="panel-footer text-center">
+    <%= link_to edit_department_path(@department) , class: "btn btn-primary" do %>
+      <i class="fa fa-pencil"> Editar</i>
+    <% end %> |
+     <%= link_to departments_path, class: "btn btn-primary" do %>
+     <i class="fa fa-undo"> Voltar</i>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div><!-- /.box -->
+        <!-- List-->
+<div class="box box-primary box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">
+      <h1>Lista de Cursos</h1> <h5><%= @department.courses.count %> Cursos(s)</h5>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div>
+      <button class="btn btn-info btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-plus"> Adicionar Curso</i>
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+        <%= render 'courses/form' %>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Imágem</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @courses.each do |course| %>
+            <tr>
+              <td><%= course.name %></td>
+              <td><%= course.description %></td>
+              <td><%= course.image %></td>
+              <td>
+                <div class="btn-group">
+                  <%= link_to course, class: "btn btn-success", title: 'Ver', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do %>
+                    <i class="fa fa-eye fa-lg"></i>
+                  <% end %>
+                  <%= link_to edit_course_path(course), class: "btn btn-warning", title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'top' do %>
+                    <i class="fa fa-exclamation-triangle fa-lg"></i>
+                  <% end %>
+                  <%= link_to course, method: :delete, data: { confirm: 'Você tem certeza que deseja excluir este departmento permanentemente?' }, class: "btn btn-danger", title: 'Excluir', 'data-toggle' => 'tooltip', 'data-placement' => 'right' do %>
+                    <i class="fa fa-times fa-lg"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

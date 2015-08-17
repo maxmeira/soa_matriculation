@@ -1,54 +1,97 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @course.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @course.image %>
-</p>
-
-<p>
-  <strong>Department:</strong>
-  <%= @course.department_id %>
-</p>
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
-
-
-<h1>New Semester</h1>
-
-<%= render 'semesters/form' %>
-
-
-<h1>Listing Semesters</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Course</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @semesters.each do |semester| %>
-      <tr>
-        <td><%= semester.name %></td>
-        <td><%= semester.course_id %></td>
-        <td><%= link_to 'Show', semester %></td>
-        <td><%= link_to 'Edit', edit_semester_path(semester) %></td>
-        <td><%= link_to 'Destroy', semester, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<% provide(:title, "Curso #{@course.name}") %>
+<div class="box box-default box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">  
+      <h1>
+        <strong>Name:</strong>
+        <%= @course.name %>
+      </h1>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tr>
+          <td rowspan="3">
+            <h1>IMAGEM</h1>
+          </td>
+          <td>
+            <strong>Description:</strong>
+            <%= @course.description %>
+          </td>
+        </tr>
+        <tr>
+          <td> Criado em: <%= @course.created_at.to_s(:created) %></td>
+        </tr>
+        <tr>
+          <td>Editado em: <%= @course.updated_at.to_s(:updated) %></td>
+        </tr> 
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+<div class="panel-footer text-center">
+    <%= link_to edit_course_path(@course), class: "btn btn-primary" do %>
+      <i class="fa fa-pencil"> Editar</i>
+    <% end %> |
+     <%= link_to courses_path, class: "btn btn-primary" do %>
+     <i class="fa fa-undo"> Voltar</i>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div><!-- /.box -->
+        <!-- List-->
+<div class="box box-primary box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">
+      <h1>Lista de Semestres</h1> <h5><%= @course.semesters.count %> Semestre(s)</h5>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div>
+      <button class="btn btn-info btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-plus"> Adicionar Semestre</i>
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+        <%= render 'semesters/form' %>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @semesters.each do |semester| %>
+            <tr>
+              <td><%= semester.name %></td>
+              <td>
+                <div class="btn-group">
+                  <%= link_to semester, class: "btn btn-success", title: 'Ver', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do %>
+                    <i class="fa fa-eye fa-lg"></i>
+                  <% end %>
+                  <%= link_to edit_semester_path(semester), class: "btn btn-warning", title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'top' do %>
+                    <i class="fa fa-exclamation-triangle fa-lg"></i>
+                  <% end %>
+                  <%= link_to semester, method: :delete, data: { confirm: 'Você tem certeza que deseja excluir este departmento permanentemente?' }, class: "btn btn-danger", title: 'Excluir', 'data-toggle' => 'tooltip', 'data-placement' => 'right' do %>
+                    <i class="fa fa-times fa-lg"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->

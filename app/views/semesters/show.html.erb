@@ -1,14 +1,93 @@
-<p id="notice"><%= notice %></p>
+<% provide(:title, "Semestre #{@semester.name}") %>
+<div class="box box-default box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">  
+      <h1>
+        <strong>Semestre:</strong>
+        <%= @semester.name %>
+      </h1>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tr>
+          <td> Criado em: <%= @semester.created_at.to_s(:created) %></td>
+        </tr>
+        <tr>
+          <td>Editado em: <%= @semester.updated_at.to_s(:updated) %></td>
+        </tr> 
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+  <div class="panel-footer text-center">
+    <%= link_to edit_semester_path(@semester), class: "btn btn-primary" do %>
+      <i class="fa fa-pencil"> Editar</i>
+    <% end %> |
+     <%= link_to semesters_path, class: "btn btn-primary" do %>
+     <i class="fa fa-undo"> Voltar</i>
+    <% end %>
+  </div>
+</div><!-- /.box -->
+<div class="box box-primary box-solid">
+  <div class="box-header with-border text-center">
+    <div class="box-title">
+      <h1>Lista de Disciplinas</h1> <h5><%= @semester.disciplines.count %> Disciplinas(s)</h5>
+    </div>
+    <div class="box-tools pull-right">
+      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    </div><!-- /.box-tools -->
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div>
+      <button class="btn btn-info btn-lg btn-block" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        <i class="fa fa-plus"> Adicionar Disciplina</i>
+      </button>
+      <div class="collapse" id="collapseExample">
+        <div class="well">
+        <%= render 'disciplines/form' %>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>Nome</th>
+			      <th>Código</th>
+			      <th>Ementa</th>
+			      <th>Carga Horária</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-<p>
-  <strong>Name:</strong>
-  <%= @semester.name %>
-</p>
-
-<p>
-  <strong>Course:</strong>
-  <%= @semester.course_id %>
-</p>
-
-<%= link_to 'Edit', edit_semester_path(@semester) %> |
-<%= link_to 'Back', semesters_path %>
+        <tbody>
+          <% @disciplines.each do |discipline| %>
+            <tr>
+              <td><%= discipline.name %></td>
+			        <td><%= discipline.code %></td>
+			        <td><%= discipline.description %></td>
+			        <td><%= discipline.workload %></td>
+              <td>
+                <div class="btn-group">
+                  <%= link_to discipline, class: "btn btn-success", title: 'Ver', 'data-toggle' => 'tooltip', 'data-placement' => 'left' do %>
+                    <i class="fa fa-eye fa-lg"></i>
+                  <% end %>
+                  <%= link_to edit_discipline_path(discipline), class: "btn btn-warning", title: 'Editar', 'data-toggle' => 'tooltip', 'data-placement' => 'top' do %>
+                    <i class="fa fa-exclamation-triangle fa-lg"></i>
+                  <% end %>
+                  <%= link_to discipline, method: :delete, data: { confirm: 'Você tem certeza que deseja excluir este departmento permanentemente?' }, class: "btn btn-danger", title: 'Excluir', 'data-toggle' => 'tooltip', 'data-placement' => 'right' do %>
+                    <i class="fa fa-times fa-lg"></i>
+                  <% end %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div><!-- /.box-body -->
+</div><!-- /.box -->
