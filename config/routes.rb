@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
-root 'institutes#index'
+  resources :users
+  
+  root 'visitors#index'
 
   resources :semesters
   resources :courses
